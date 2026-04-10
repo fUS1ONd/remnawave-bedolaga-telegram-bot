@@ -1195,6 +1195,9 @@ class User(Base):
     used_promocodes = Column(Integer, default=0)
     has_had_paid_subscription = Column(Boolean, default=False, nullable=False)
     referred_by_id = Column(Integer, ForeignKey('users.id', ondelete='SET NULL'), nullable=True, index=True)
+    invite_activated = Column(Boolean, nullable=False, default=False, server_default='false')
+    is_permanent = Column(Boolean, nullable=False, default=False, server_default='false')
+    is_banned = Column(Boolean, nullable=False, default=False, server_default='false')
     referral_code = Column(String(20), unique=True, nullable=True)
     created_at = Column(AwareDateTime(), default=func.now())
     updated_at = Column(AwareDateTime(), default=func.now(), onupdate=func.now())
@@ -3413,3 +3416,19 @@ class NewsTag(Base):
 
     def __repr__(self) -> str:
         return f"<NewsTag id={self.id} name='{self.name}'>"
+
+
+class Invite(Base):
+    """Модель инвайт-кода для приглашения пользователей."""
+
+    __tablename__ = 'invites'
+
+    code = Column(String(16), primary_key=True)
+    created_by = Column(Integer, ForeignKey('users.id', ondelete='CASCADE'), nullable=False, index=True)
+    used_by = Column(Integer, ForeignKey('users.id', ondelete='SET NULL'), nullable=True, index=True)
+    used_at = Column(AwareDateTime(), nullable=True)
+    created_at = Column(AwareDateTime(), nullable=False, server_default=func.now())
+
+    # Связи
+    creator = relationship('User', foreign_keys=[created_by])
+    user = relationship('User', foreign_keys=[used_by])
