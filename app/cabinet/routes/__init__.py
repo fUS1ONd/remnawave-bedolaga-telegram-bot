@@ -6,6 +6,7 @@ from .account_linking import merge_router as merge_router, router as account_lin
 from .admin_apps import router as admin_apps_router
 from .admin_audit_log import router as admin_audit_log_router
 from .admin_ban_system import router as admin_ban_system_router
+from .admin_invites import router as admin_invites_router, users_router as admin_invites_users_router
 from .admin_broadcasts import router as admin_broadcasts_router
 from .admin_button_styles import router as admin_button_styles_router
 from .admin_campaigns import router as admin_campaigns_router
@@ -44,6 +45,7 @@ from .branding import router as branding_router
 from .contests import router as contests_router
 from .gift import router as gift_router
 from .info import router as info_router
+from .invite import router as invite_router
 from .landing import router as landing_router
 from .media import router as media_router
 from .news import router as news_router
@@ -100,6 +102,9 @@ router.include_router(wheel_router)
 # Gift routes
 router.include_router(gift_router)
 
+# Invite routes
+router.include_router(invite_router)
+
 # Admin routes (notifications router MUST be before tickets router to avoid route conflict)
 router.include_router(admin_ticket_notifications_router)
 router.include_router(admin_tickets_router)
@@ -133,6 +138,8 @@ router.include_router(admin_channels_router)
 router.include_router(admin_apps_router)
 router.include_router(admin_roles_router)
 router.include_router(admin_policies_router)
+router.include_router(admin_invites_router)
+router.include_router(admin_invites_users_router)
 router.include_router(admin_audit_log_router)
 # Categories/tags/media routers MUST be before the main news router
 # to avoid /admin/news/{article_id} catching /admin/news/categories etc.
