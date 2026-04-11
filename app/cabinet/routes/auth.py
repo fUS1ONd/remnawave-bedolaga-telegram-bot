@@ -112,6 +112,9 @@ def _user_to_response(user: User) -> UserResponse:
         language=user.language,
         created_at=user.created_at,
         auth_type=getattr(user, 'auth_type', 'telegram'),  # Поддержка старых записей
+        invite_activated=user.invite_activated,
+        is_permanent=user.is_permanent,
+        is_banned=user.is_banned,
     )
 
 

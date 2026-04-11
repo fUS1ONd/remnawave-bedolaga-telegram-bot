@@ -123,6 +123,9 @@ class UserResponse(BaseModel):
     language: str = 'ru'
     created_at: datetime
     auth_type: str = 'telegram'  # "telegram" или "email"
+    invite_activated: bool = False
+    is_permanent: bool = False
+    is_banned: bool = False
 
     class Config:
         from_attributes = True
