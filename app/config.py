@@ -143,6 +143,7 @@ class Settings(BaseSettings):
     TRIAL_ACTIVATION_PRICE: int = 0
     TRIAL_USER_TAG: str | None = None
     TRIAL_DISABLED_FOR: str = 'none'  # none, email, telegram, all
+    GRACE_PERIOD_DAYS: int = 3  # Количество дней grace-периода после истечения платной подписки
     DEFAULT_TRAFFIC_LIMIT_GB: int = 100
     DEFAULT_DEVICE_LIMIT: int = 1
     DEFAULT_TRAFFIC_RESET_STRATEGY: str = 'MONTH'

@@ -774,9 +774,24 @@ class RemnaWaveWebhookService:
         else:
             await db.commit()
 
-        # Деактивация инвайт-доступа (пропускает permanent-пользователей)
+        # Grace-период: permanent — пропуск, триал — кик сразу, платная — grace
         from app.database.crud.invites import deactivate_user_invite
-        await deactivate_user_invite(db, user.id)
+        if not user.is_permanent:
+            if subscription.is_trial:
+                # Триал кончился — кик сразу
+                await deactivate_user_invite(db, user.id)
+                logger.info('Триал истёк — кик из кабинета', user_id=user.id)
+            else:
+                # Платная подписка — grace period
+                from datetime import timedelta
+                from app.config import settings
+                user.grace_until = datetime.now(UTC) + timedelta(days=settings.GRACE_PERIOD_DAYS)
+                await db.commit()
+                logger.info(
+                    'Платная подписка истекла — grace period',
+                    user_id=user.id,
+                    grace_until=user.grace_until.isoformat(),
+                )
 
         await self._notify_user(
             user,
@@ -829,9 +844,18 @@ class RemnaWaveWebhookService:
         else:
             await db.commit()
 
-        # Деактивация инвайт-доступа (пропускает permanent-пользователей)
+        # Grace-период: permanent — пропуск, триал — кик сразу, платная — grace
         from app.database.crud.invites import deactivate_user_invite
-        await deactivate_user_invite(db, user.id)
+        if not user.is_permanent:
+            if subscription.is_trial:
+                await deactivate_user_invite(db, user.id)
+                logger.info('Триал disabled — кик из кабинета', user_id=user.id)
+            else:
+                from datetime import timedelta
+                from app.config import settings
+                user.grace_until = datetime.now(UTC) + timedelta(days=settings.GRACE_PERIOD_DAYS)
+                await db.commit()
+                logger.info('Подписка disabled — grace period', user_id=user.id)
 
         await self._notify_user(
             user, 'WEBHOOK_SUB_DISABLED', reply_markup=self._get_subscription_keyboard(user), subscription=subscription
