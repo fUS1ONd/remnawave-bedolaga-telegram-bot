@@ -138,6 +138,9 @@ class EmailRegisterStandaloneRequest(BaseModel):
     referral_code: str | None = Field(
         None, max_length=32, pattern=r'^[a-zA-Z0-9_-]+$', description='Referral code of inviter'
     )
+    invite_code: str | None = Field(
+        None, max_length=32, description='Invite code to activate on registration'
+    )
 
 
 class CampaignBonusInfo(BaseModel):

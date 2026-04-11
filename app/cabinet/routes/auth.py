@@ -1117,6 +1117,12 @@ async def register_email_standalone(
             logger.error('Failed to process referral registration', error=e)
             # Не прерываем регистрацию из-за ошибки реферальной системы
 
+    # Активация инвайта при регистрации (если передан)
+    if request.invite_code:
+        from app.database.crud.invites import activate_invite
+        success, reason = await activate_invite(db, request.invite_code.strip().upper(), user.id)
+        # Не бросаем ошибку если код невалидный — просто регистрируем без активации
+
     # Для тестового email - сразу можно логиниться (уже verified)
     # Для обычного email - требуется верификация (если включена)
     verification_required = not is_test_email and settings.is_cabinet_email_verification_enabled()
