@@ -1198,6 +1198,7 @@ class User(Base):
     invite_activated = Column(Boolean, nullable=False, default=False, server_default='false')
     is_permanent = Column(Boolean, nullable=False, default=False, server_default='false')
     is_banned = Column(Boolean, nullable=False, default=False, server_default='false')
+    grace_until = Column(AwareDateTime(), nullable=True)
     referral_code = Column(String(20), unique=True, nullable=True)
     created_at = Column(AwareDateTime(), default=func.now())
     updated_at = Column(AwareDateTime(), default=func.now(), onupdate=func.now())
