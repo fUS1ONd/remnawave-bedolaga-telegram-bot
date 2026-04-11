@@ -185,6 +185,20 @@ def create_unified_app(
     async def stop_disposable_email_service() -> None:  # pragma: no cover - event hook
         await disposable_email_service.stop()
 
+    # Grace-период: проверка истекших grace и кик из кабинета
+    from app.database.database import AsyncSessionLocal
+    from app.services.grace_check_service import GraceCheckService
+    grace_check_service = GraceCheckService(session_factory=AsyncSessionLocal)
+    app.state.grace_check_service = grace_check_service
+
+    @app.on_event('startup')
+    async def start_grace_check_service() -> None:  # pragma: no cover - event hook
+        await grace_check_service.start()
+
+    @app.on_event('shutdown')
+    async def stop_grace_check_service() -> None:  # pragma: no cover - event hook
+        await grace_check_service.stop()
+
     miniapp_mounted, miniapp_path = _mount_miniapp_static(app)
     _mount_uploads_static(app)
 
