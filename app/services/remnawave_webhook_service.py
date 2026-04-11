@@ -774,6 +774,10 @@ class RemnaWaveWebhookService:
         else:
             await db.commit()
 
+        # Деактивация инвайт-доступа (пропускает permanent-пользователей)
+        from app.database.crud.invites import deactivate_user_invite
+        await deactivate_user_invite(db, user.id)
+
         await self._notify_user(
             user,
             'WEBHOOK_SUB_EXPIRED',
@@ -824,6 +828,10 @@ class RemnaWaveWebhookService:
             logger.info('Webhook: subscription disabled for user', subscription_id=subscription.id, user_id=user.id)
         else:
             await db.commit()
+
+        # Деактивация инвайт-доступа (пропускает permanent-пользователей)
+        from app.database.crud.invites import deactivate_user_invite
+        await deactivate_user_invite(db, user.id)
 
         await self._notify_user(
             user, 'WEBHOOK_SUB_DISABLED', reply_markup=self._get_subscription_keyboard(user), subscription=subscription
