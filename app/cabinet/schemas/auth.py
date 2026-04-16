@@ -144,6 +144,9 @@ class EmailRegisterStandaloneRequest(BaseModel):
     invite_code: str | None = Field(
         None, max_length=32, description='Invite code to activate on registration'
     )
+    campaign_slug: str | None = Field(
+        None, min_length=1, max_length=64, pattern=r'^[a-zA-Z0-9_-]+$', description='Campaign slug from web link'
+    )
 
 
 class CampaignBonusInfo(BaseModel):
