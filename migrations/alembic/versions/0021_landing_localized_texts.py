@@ -21,42 +21,43 @@ def upgrade() -> None:
     # --- 1. Data migration: wrap existing plain-text values into {"ru": value} ---
 
     # title (NOT NULL) — always wrap
+    # CAST до text, чтобы работало и когда колонка уже json (после повторного запуска)
     op.execute("""
         UPDATE landing_pages
-        SET title = jsonb_build_object('ru', title)
-        WHERE title IS NOT NULL AND title != '';
+        SET title = jsonb_build_object('ru', title::text)
+        WHERE title IS NOT NULL AND title::text != '';
     """)
     op.execute("""
         UPDATE landing_pages
         SET title = '{"ru": ""}'::jsonb
-        WHERE title IS NULL OR title = '';
+        WHERE title IS NULL OR title::text = '';
     """)
 
     # subtitle (nullable)
     op.execute("""
         UPDATE landing_pages
-        SET subtitle = jsonb_build_object('ru', subtitle)
+        SET subtitle = jsonb_build_object('ru', subtitle::text)
         WHERE subtitle IS NOT NULL;
     """)
 
     # footer_text (nullable)
     op.execute("""
         UPDATE landing_pages
-        SET footer_text = jsonb_build_object('ru', footer_text)
+        SET footer_text = jsonb_build_object('ru', footer_text::text)
         WHERE footer_text IS NOT NULL;
     """)
 
     # meta_title (nullable)
     op.execute("""
         UPDATE landing_pages
-        SET meta_title = jsonb_build_object('ru', meta_title)
+        SET meta_title = jsonb_build_object('ru', meta_title::text)
         WHERE meta_title IS NOT NULL;
     """)
 
     # meta_description (nullable)
     op.execute("""
         UPDATE landing_pages
-        SET meta_description = jsonb_build_object('ru', meta_description)
+        SET meta_description = jsonb_build_object('ru', meta_description::text)
         WHERE meta_description IS NOT NULL;
     """)
 
