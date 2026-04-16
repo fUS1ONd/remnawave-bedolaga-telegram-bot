@@ -1,7 +1,7 @@
 """add invites system
 
-Revision ID: 0054
-Revises: 0053
+Revision ID: 0060
+Revises: 0059
 Create Date: 2026-04-11
 
 """
@@ -11,8 +11,8 @@ from typing import Sequence, Union
 import sqlalchemy as sa
 from alembic import op
 
-revision: str = '0054'
-down_revision: Union[str, None] = '0053'
+revision: str = '0060'
+down_revision: Union[str, None] = '0059'
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
