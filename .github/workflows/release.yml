@@ -147,11 +147,7 @@ jobs:
             ### Docker
 
             ```bash
-            # Docker Hub
-            docker pull fr1ngg/remnawave-bedolaga-telegram-bot:${{ github.ref_name }}
-
-            # GitHub Container Registry
-            docker pull ghcr.io/${{ github.repository }}:${{ github.ref_name }}
+            docker pull fus1ond/bedolaga-bot:${{ github.ref_name }}
             ```
 
             ### Update
