@@ -1,14 +1,12 @@
 """Тесты для CRUD-операций инвайт-кодов."""
 
 import string
-from datetime import UTC, datetime
-from unittest.mock import AsyncMock, MagicMock, patch
+from unittest.mock import AsyncMock, MagicMock
 
 from app.database.crud.invites import (
     _generate_code,
     activate_invite,
     ban_user,
-    create_invite,
     deactivate_user_invite,
     get_all_invites,
     get_invite,

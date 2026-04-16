@@ -6,12 +6,12 @@ from .account_linking import merge_router as merge_router, router as account_lin
 from .admin_apps import router as admin_apps_router
 from .admin_audit_log import router as admin_audit_log_router
 from .admin_ban_system import router as admin_ban_system_router
-from .admin_invites import router as admin_invites_router, users_router as admin_invites_users_router
 from .admin_broadcasts import router as admin_broadcasts_router
 from .admin_button_styles import router as admin_button_styles_router
 from .admin_campaigns import router as admin_campaigns_router
 from .admin_channels import router as admin_channels_router
 from .admin_email_templates import router as admin_email_templates_router
+from .admin_invites import router as admin_invites_router, users_router as admin_invites_users_router
 from .admin_landings import router as admin_landings_router
 from .admin_menu_layout import router as admin_menu_layout_router
 from .admin_news import router as admin_news_router

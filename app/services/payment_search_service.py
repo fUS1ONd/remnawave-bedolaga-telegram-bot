@@ -62,7 +62,7 @@ def _escape_like(value: str) -> str:
     return value.replace('\\', '\\\\').replace('%', '\\%').replace('_', '\\_')
 
 
-class StatusFilter(str, enum.Enum):
+class StatusFilter(enum.StrEnum):
     """Supported status filter values."""
 
     ALL = 'all'
@@ -71,7 +71,7 @@ class StatusFilter(str, enum.Enum):
     CANCELLED = 'cancelled'
 
 
-class PeriodPreset(str, enum.Enum):
+class PeriodPreset(enum.StrEnum):
     """Predefined period presets."""
 
     H24 = '24h'

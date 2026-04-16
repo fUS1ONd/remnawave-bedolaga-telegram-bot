@@ -10,6 +10,7 @@ from app.database.models import User
 
 from ..dependencies import get_cabinet_db, get_current_cabinet_user
 
+
 router = APIRouter(prefix='/invite', tags=['Cabinet Invite'])
 
 

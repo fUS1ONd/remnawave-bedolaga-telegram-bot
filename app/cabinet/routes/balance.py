@@ -1036,7 +1036,7 @@ def _is_checkable(record: PendingPayment) -> bool:
     if record.method == PaymentMethod.KASSA_AI:
         return status in {'pending', 'created', 'processing'}
     if record.method == PaymentMethod.RIOPAY:
-        return status in {'pending'}
+        return status == 'pending'
     return False
 
 
