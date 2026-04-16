@@ -188,6 +188,7 @@ def create_unified_app(
     # Grace-период: проверка истекших grace и кик из кабинета
     from app.database.database import AsyncSessionLocal
     from app.services.grace_check_service import GraceCheckService
+
     grace_check_service = GraceCheckService(session_factory=AsyncSessionLocal)
     app.state.grace_check_service = grace_check_service
 

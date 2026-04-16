@@ -776,6 +776,7 @@ class RemnaWaveWebhookService:
 
         # Grace-период: permanent — пропуск, триал — кик сразу, платная — grace
         from app.database.crud.invites import deactivate_user_invite
+
         if not user.is_permanent:
             if subscription.is_trial:
                 # Триал кончился — кик сразу
@@ -785,6 +786,7 @@ class RemnaWaveWebhookService:
                 # Платная подписка — grace period
                 from datetime import timedelta
                 from app.config import settings
+
                 user.grace_until = datetime.now(UTC) + timedelta(days=settings.GRACE_PERIOD_DAYS)
                 await db.commit()
                 logger.info(
@@ -846,6 +848,7 @@ class RemnaWaveWebhookService:
 
         # Grace-период: permanent — пропуск, триал — кик сразу, платная — grace
         from app.database.crud.invites import deactivate_user_invite
+
         if not user.is_permanent:
             if subscription.is_trial:
                 await deactivate_user_invite(db, user.id)
@@ -853,6 +856,7 @@ class RemnaWaveWebhookService:
             else:
                 from datetime import timedelta
                 from app.config import settings
+
                 user.grace_until = datetime.now(UTC) + timedelta(days=settings.GRACE_PERIOD_DAYS)
                 await db.commit()
                 logger.info('Подписка disabled — grace period', user_id=user.id)

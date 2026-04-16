@@ -1138,6 +1138,7 @@ async def register_email_standalone(
     # Активация инвайта при регистрации (если передан)
     if request.invite_code:
         from app.database.crud.invites import activate_invite
+
         success, reason = await activate_invite(db, request.invite_code.strip().upper(), user.id)
         # Не бросаем ошибку если код невалидный — просто регистрируем без активации
 
