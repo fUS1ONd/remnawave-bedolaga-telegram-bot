@@ -161,7 +161,7 @@ async def _answer_with_photo(self: Message, text: str = None, **kwargs):
         pass
     language = _get_language(self)
 
-    if LOGO_PATH.exists():  # noqa: ASYNC240
+    if LOGO_PATH.exists():
         try:
             result = await self.answer_photo(get_logo_media(), caption=text, **kwargs)
             _cache_logo_file_id(result)
@@ -240,7 +240,7 @@ async def _edit_with_photo(self: Message, text: str, **kwargs):
                 return await _text_answer(self, text, **kwargs)
         except Exception:
             pass
-        if LOGO_PATH.exists():  # noqa: ASYNC240
+        if LOGO_PATH.exists():
             media = get_logo_media()
         else:
             media = self.photo[-1].file_id
